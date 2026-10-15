@@ -1,0 +1,72 @@
+{
+  "model_name": "google/bert_uncased_L-2_H-128_A-2",
+  "seed": 42,
+  "max_length": 128,
+  "train_rows": 62358,
+  "validation_rows": 7440,
+  "labels": [
+    "DEVANAGARI",
+    "LATIN"
+  ],
+  "tokenizer_unk_rate_sample": 0.025144111995608016,
+  "train_metrics": {
+    "train_runtime": 175.5527,
+    "train_samples_per_second": 1776.048,
+    "train_steps_per_second": 55.51,
+    "total_flos": 70220185950960.0,
+    "train_loss": 0.04034459619353281,
+    "epoch": 5.0
+  },
+  "validation_metrics": {
+    "eval_loss": 0.018913043662905693,
+    "eval_accuracy": 0.9954301075268818,
+    "eval_macro_f1": 0.9953739127890391,
+    "eval_weighted_f1": 0.9954314781302437,
+    "eval_runtime": 1.6261,
+    "eval_samples_per_second": 4575.367,
+    "eval_steps_per_second": 71.951,
+    "epoch": 5.0
+  },
+  "validation_classification_report": {
+    "DEVANAGARI": {
+      "precision": 0.9918674698795181,
+      "recall": 0.9978787878787879,
+      "f1-score": 0.9948640483383686,
+      "support": 3300.0
+    },
+    "LATIN": {
+      "precision": 0.9983009708737864,
+      "recall": 0.9934782608695653,
+      "f1-score": 0.9958837772397094,
+      "support": 4140.0
+    },
+    "accuracy": 0.9954301075268818,
+    "macro avg": {
+      "precision": 0.9950842203766523,
+      "recall": 0.9956785243741766,
+      "f1-score": 0.9953739127890391,
+      "support": 7440.0
+    },
+    "weighted avg": {
+      "precision": 0.9954474018843932,
+      "recall": 0.9954301075268818,
+      "f1-score": 0.9954314781302437,
+      "support": 7440.0
+    }
+  },
+  "validation_confusion_matrix": [
+    [
+      3293,
+      7
+    ],
+    [
+      27,
+      4113
+    ]
+  ],
+  "confusion_matrix_order": [
+    "DEVANAGARI",
+    "LATIN"
+  ],
+  "note": "Validation only. public_test.csv and call_data evaluation files were not read."
+}

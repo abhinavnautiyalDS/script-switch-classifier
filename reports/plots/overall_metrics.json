@@ -1,0 +1,7 @@
+{
+  "evaluation_rows": 2084,
+  "accuracy": 0.9870441458733206,
+  "macro_precision": 0.987413706967027,
+  "macro_recall": 0.9860436876027865,
+  "macro_f1": 0.9867088540319523
+}

@@ -1,0 +1,50 @@
+{
+  "evaluation_file": "data\\evaluation\\call_data_final_eval.csv",
+  "model_path": "artifacts\\bert_tiny_script_classifier\\model",
+  "eligible_rows": 2084,
+  "excluded_rows": 128,
+  "accuracy": 0.9870441458733206,
+  "macro_f1": 0.9867088540319523,
+  "classification_report": {
+    "DEVANAGARI": {
+      "precision": 0.9851485148514851,
+      "recall": 0.9925187032418953,
+      "f1-score": 0.9888198757763975,
+      "support": 1203.0
+    },
+    "LATIN": {
+      "precision": 0.9896788990825688,
+      "recall": 0.9795686719636776,
+      "f1-score": 0.9845978322875071,
+      "support": 881.0
+    },
+    "accuracy": 0.9870441458733206,
+    "macro avg": {
+      "precision": 0.987413706967027,
+      "recall": 0.9860436876027865,
+      "f1-score": 0.9867088540319523,
+      "support": 2084.0
+    },
+    "weighted avg": {
+      "precision": 0.987063710872399,
+      "recall": 0.9870441458733206,
+      "f1-score": 0.9870350291767275,
+      "support": 2084.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      1194,
+      9
+    ],
+    [
+      18,
+      863
+    ]
+  ],
+  "confusion_matrix_order": [
+    "DEVANAGARI",
+    "LATIN"
+  ],
+  "device": "cpu"
+}
