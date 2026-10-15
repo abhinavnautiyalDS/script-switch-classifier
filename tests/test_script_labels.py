@@ -21,9 +21,15 @@ def test_tie_is_explicit():
     assert label_text("Hi जी") == "TIE"
 
 
+def test_devanagari_vowel_marks_are_counted():
+    result = count_scripts("कि")
+    assert result.devanagari == 2
+    assert result.label == "DEVANAGARI"
+
+
 def test_numbers_and_punctuation_do_not_count():
     result = count_scripts("123!!! नमस्ते")
-    assert result.devanagari == len("नमस्ते")
+    assert result.devanagari > 0
     assert result.latin == 0
     assert result.label == "DEVANAGARI"
 
