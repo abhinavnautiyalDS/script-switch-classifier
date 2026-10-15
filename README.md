@@ -9,45 +9,51 @@ This classifies **writing script**, not language. Hindi written in Latin letters
 
 ## Evaluation policy
 
-The supplied `call_data(3).txt` must remain a held-out real-world evaluation set. Do not use it for training, synthetic-data generation, model selection, or threshold tuning. Do not commit raw call transcripts or personal/customer data.
-
-## Initial workflow
-
-1. Inspect public dataset schemas and licensing metadata.
-2. Audit the selected model tokenizer on Devanagari, Latin, and mixed examples.
-3. Prepare labels using a documented Unicode-letter-count rule.
-4. Split reproducibly and prevent duplicate/parallel sentence leakage.
-5. Fine-tune only after the tokenizer audit passes.
-6. Evaluate once on the untouched call transcript data.
+The real-world `call_data` transcript file is a held-out final evaluation set. Never use it for training, validation, model selection, hyperparameter tuning, or synthetic-data generation. Do not commit raw call transcripts or personal/customer data.
 
 ## Selected initial checkpoint
 
-`google/bert_uncased_L-2_H-128_A-2` (BERT-Tiny).
+`google/bert_uncased_L-2_H-128_A-2` (BERT-Tiny; 2 transformer layers, hidden size 128).
 
-**Important:** this checkpoint is English-oriented. If Devanagari characters are mostly mapped to unknown tokens, do not train it for this task; select a script-capable tokenizer/encoder instead.
+**Important tokenizer caveat:** this is an English-only, uncased BERT miniature. The training script prints the observed `[UNK]` token rate before training. If Devanagari/mixed text is largely mapped to unknown tokens, treat results as an experiment only and switch to a script-capable multilingual encoder before production use.
 
-## Public datasets to verify
+## Dataset preparation
+
+The preparation pipeline uses these public sources:
 
 - `LingoIITGN/COMI-LINGUA`
 - `debajyotimaz/trilingual-hinglish-corpus`
 
-Check each dataset's current card, licence, splits, schema, and terms before use. Dataset identifiers and schemas may change; the inspection script reports what's available.
+Review current dataset cards, licences, splits, schemas, and source terms before use. Labels are derived from Unicode script counts, not from the source's language labels.
 
-## Quick start
-
-Python 3.10–3.12 recommended.
+Run in Python 3.10–3.12:
 
 ```bash
 python -m venv .venv
-# Windows: .venv\Scripts\activate
+# Windows: .venv\\Scripts\\activate
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 python -m src.data.inspect_datasets
+python -m src.data.prepare_dataset
 python -m src.data.audit_tokenizer
 pytest -q
 ```
 
-Training scripts should be added after dataset schemas and tokenizer behavior have been verified.
+This creates `data/processed/train.csv`, `validation.csv`, and `public_test.csv`. The training script reads **only train and validation**.
+
+## Fine-tuning
+
+Recommended: open `notebooks/02_finetune_bert_tiny.ipynb` in Google Colab and select a GPU runtime.
+
+Or, after dataset preparation:
+
+```bash
+python -m src.train
+```
+
+Training settings: seed 42, max sequence length 128, batch size 32, learning rate 5e-5, up to 5 epochs, early stopping based on validation macro-F1. The best checkpoint and validation metrics are written to `artifacts/bert_tiny_script_classifier/`.
+
+Outputs include the model, `results.json`, validation classification report, and confusion matrix. No public-test or real-world call evaluation is run during fine-tuning.
 
 ## Label policy
 
@@ -55,7 +61,7 @@ Count alphabetic characters by Unicode script:
 
 - More Devanagari letters -> `DEVANAGARI`
 - More Latin letters -> `LATIN`
-- Equal counts -> `TIE` (exclude from supervised training by default)
+- Equal counts -> `TIE` (excluded from supervised training)
 - Other scripts without Devanagari/Latin letters -> `OUT_OF_SCOPE`
 - No letters -> `NO_LETTERS`
 
@@ -64,6 +70,6 @@ Digits, whitespace, punctuation, and symbols do not count.
 ## Privacy and reproducibility
 
 - Never commit credentials, API tokens, phone numbers, or raw call transcripts.
-- Store downloaded datasets outside version control.
+- Store downloaded datasets and model artifacts outside version control.
 - Record dataset versions and licences in experiment notes.
 - Do not claim an accuracy target is met until measured on held-out data.
