@@ -1,0 +1,21 @@
+seed: 42
+
+model:
+  name: google/bert_uncased_L-2-H-128-A-2
+  max_length: 128
+  maximum_unknown_token_rate: 0.05
+
+datasets:
+  - id: LingoIITGN/COMI-LINGUA
+    name: COMI-LINGUA
+  - id: debajyotimaz/trilingual-hinglish-corpus
+    name: Trilingual Hinglish Corpus
+
+labels:
+  devanagari: DEVANAGARI
+  latin: LATIN
+  tie: TIE
+
+data:
+  output_dir: data/processed
+  holdout_call_data: true
