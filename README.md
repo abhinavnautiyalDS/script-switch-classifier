@@ -22,7 +22,7 @@ The supplied `call_data(3).txt` must remain a held-out real-world evaluation set
 
 ## Selected initial checkpoint
 
-`google/bert_uncased_L-2-H-128-A-2` (BERT-Tiny).
+`google/bert_uncased_L-2_H-128_A-2` (BERT-Tiny).
 
 **Important:** this checkpoint is English-oriented. If Devanagari characters are mostly mapped to unknown tokens, do not train it for this task; select a script-capable tokenizer/encoder instead.
 
