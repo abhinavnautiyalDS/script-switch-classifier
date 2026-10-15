@@ -148,7 +148,7 @@ def main() -> None:
         num_train_epochs=5,
         weight_decay=0.01,
         warmup_ratio=0.1,
-        evaluation_strategy="epoch",
+        eval_strategy="epoch",
         save_strategy="epoch",
         logging_strategy="steps",
         logging_steps=100,
