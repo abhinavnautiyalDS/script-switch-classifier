@@ -31,7 +31,7 @@ This is a metadata/schema review from the public Hugging Face dataset cards, not
 
 ## 3. Critical modeling gate
 
-The current checkpoint `google/bert_uncased_L-2-H-128-A-2` is English-oriented. Its tokenizer coverage for Devanagari has not yet been measured in the user's runtime. Run:
+The current checkpoint `google/bert_uncased_L-2_H-128_A-2` is English-oriented. Its tokenizer coverage for Devanagari has not yet been measured in the user's runtime. Run:
 
 ```bash
 python -m src.data.audit_tokenizer
