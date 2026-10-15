@@ -1,7 +1,7 @@
 seed: 42
 
 model:
-  name: google/bert_uncased_L-2-H-128-A-2
+  name: google/bert_uncased_L-2_H-128_A-2
   max_length: 128
   maximum_unknown_token_rate: 0.05
 
