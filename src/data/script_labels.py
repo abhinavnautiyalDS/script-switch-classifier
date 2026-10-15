@@ -1,6 +1,7 @@
-"""Unicode-based dominant-script labels for Devanagari vs Latin."""
+"""Unicode-codepoint dominant-script labels for Devanagari vs Latin."""
 from __future__ import annotations
 
+import unicodedata
 from dataclasses import asdict, dataclass
 
 
@@ -16,10 +17,19 @@ class ScriptCounts:
 
 
 def count_scripts(text: str) -> ScriptCounts:
+    """Count script-bearing Unicode codepoints, including combining marks.
+
+    Devanagari dependent vowel signs and virama are Unicode marks rather than
+    alphabetic letters, so counting only isalpha() would undercount Devanagari.
+    This counts letters/marks in the Devanagari block, ASCII Latin letters,
+    and other-script letters/marks separately.
+    """
     dev = latin = other = 0
     for char in text:
-        if not char.isalpha():
+        category = unicodedata.category(char)
+        if not (category.startswith("L") or category.startswith("M")):
             continue
+
         code = ord(char)
         if 0x0900 <= code <= 0x097F:
             dev += 1
@@ -40,4 +50,5 @@ def count_scripts(text: str) -> ScriptCounts:
 
 
 def label_text(text: str) -> str:
+    """Return dominant script label; ties and out-of-scope text are explicit."""
     return count_scripts(text).label
