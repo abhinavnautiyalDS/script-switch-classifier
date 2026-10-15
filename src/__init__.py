@@ -1,0 +1,1 @@
+"""Script Switch Classifier project."""
