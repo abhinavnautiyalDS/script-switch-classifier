@@ -1,7 +1,7 @@
 """Audit tokenizer behavior before training; this script does not train a model."""
 from transformers import AutoTokenizer
 
-MODEL_NAME = "google/bert_uncased_L-2-H-128-A-2"
+MODEL_NAME = "google/bert_uncased_L-2_H-128_A-2"
 EXAMPLES = {
     "devanagari": "नमस्ते सर, आप कैसे हैं?",
     "latin_romanized_hindi": "Namaste sir, aap kaise hain?",
